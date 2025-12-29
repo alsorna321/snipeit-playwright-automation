@@ -4,7 +4,7 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   test.setTimeout(180000);
 
   // =====================
-  // 1️⃣ LOGIN (STABLE)
+  // LOGIN (STABLE)
   // =====================
   await page.goto('https://demo.snipeitapp.com/login', {
     waitUntil: 'domcontentloaded',
@@ -19,7 +19,7 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   ]);
 
   // =====================
-  // 2️⃣ OPEN CREATE ASSET PAGE DIRECTLY
+  // OPEN CREATE ASSET PAGE DIRECTLY
   // (UI navigation is flaky — URL is stable)
   // =====================
   await page.goto('https://demo.snipeitapp.com/hardware/create', {
@@ -33,7 +33,7 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   const assetName = `MacBook Pro 13 - ${Date.now()}`;
 
   // =====================
-  // 3️⃣ FILL FORM
+  // FILL FORM
   // =====================
   await nameInput.fill(assetName);
 
@@ -53,7 +53,7 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   await page.keyboard.press('Enter');
 
   // =====================
-  // 4️⃣ SAVE
+  // SAVE
   // =====================
   await Promise.all([
     page.waitForLoadState('networkidle'),
@@ -61,7 +61,7 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   ]);
 
   // =====================
-  // 5️⃣ VERIFY ASSET IN LIST
+  // VERIFY ASSET IN LIST
   // =====================
   await expect(page.locator('table')).toContainText(assetName, {
     timeout: 60000,
@@ -70,17 +70,18 @@ test('Create and validate MacBook Pro asset', async ({ page }) => {
   await page.locator(`text=${assetName}`).first().click();
 
   // =====================
-  // 6️⃣ VERIFY DETAILS
+  // VERIFY DETAILS
   // =====================
   await expect(page.locator('h1')).toContainText(assetName);
   await expect(page.locator('body')).toContainText('MacBook Pro 13');
   await expect(page.locator('body')).toContainText('Ready to Deploy');
 
   // =====================
-  // 7️⃣ VERIFY HISTORY
+  // VERIFY HISTORY
   // =====================
   await page.locator('text=History').click();
 
   await expect(page.locator('table')).toContainText('Created');
 });
+
 
